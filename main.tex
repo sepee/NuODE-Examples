@@ -20,6 +20,8 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\I}{\mathbb{I}}
+\renewcommand{\P}{\mathbb{P}}
+
 \newcommand{\La}[1]{\mathcal{L}\left\{#1\right\}}
 \newcommand{\Linv}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
 \newcommand{\sep}{\vspace{-8pt}\hline\vspace{4pt}} % used for separating sections with hlines
@@ -144,20 +146,28 @@ $\boxed{\hat{\Phi}_{t,h}(y) = y + hf(t,y) + \frac{1}{2}h^2(f_t(t,y) + f_y(t,y)f(
     h \to 0 \\ h = T/N
 \end{smallmatrix}} \max_{n = 0,1,...,N}{\Vert e_n \Vert} = 0.\]
 
-\textbf{Def 3.2.1 (Local Error):} The \textbf{local error} of a one-step method is the difference between the flow map $\Phi_h$ and it's descrete approximation $\Psi_h$ \[
-le(y, h) = \Psi_h(y) - \Phi_h(y).
-\] It measures how much error is introduced in a single timestep of size $h$.\\
+\textbf{Def 3.2.1 (Local Error):} The \textbf{local error} of a one-step method is the difference between the flow map $\Phi_h$ and it's descrete approximation $\Psi_h$ 
+\[ le(y, h) = \Psi_h(y) - \Phi_h(y).\]
+It measures how much error is introduced in a single timestep of size $h$.\\
 
-\textbf{Def 3.2.2 (Consistency):} Suppose the local error for our method satisfies \[
-\Vert le(y, h) \Vert \leq Ch^{p + 1}
-\] where $C$ is a constant that depends on $y(t)$ and it's derivatives, and $p \geq 1$. Then the method is \textbf{consistent} at order $p$.\\
+\textbf{Def 3.2.2 (Consistency):} Suppose the local error for our method satisfies 
+\[ \Vert le(y, h) \Vert \leq Ch^{p + 1} \]
+ where $C$ is a constant that depends on $y(t)$ and it's derivatives, and $p \geq 1$. Then the method is \textbf{consistent} at order $p$.\\
 
-\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independant Lipschitz condition on $D$ (spatial domain) \[
-\norm{\Psi_h(u) - \Psi_h(v)} \leq (1 + h\hat L)\norm{u - v} \quad \forall\, u, v \in D.
-\] Then the method is \textbf{stable}. \textit{Note $\hat L$ need not be the same Lipschitz constant as for the vector field.}\\
+\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independant Lipschitz condition on $D$ (spatial domain)
+ \[ \norm{\Psi_h(u) - \Psi_h(v)} \leq (1 + h\hat L)\norm{u - v} \quad \forall\, u, v \in D. \]
+ Then the method is \textbf{stable}. \textit{Note $\hat L$ need not be the same Lipschitz constant as for the vector field.}\\
 
 \textbf{Thm 3.2.1 (Convergence of One-Step Methods):} Given a differential equation and a one-step method $\Psi_h$ which is \textbf{consistent} and \textbf{stable}. Then the method is \textbf{convergent}.\\
 
+\textbf{Interpolating Polynomials:} Given distinct \textit{abscissa points} $c_1, ... c_s$ and \textit{data points} $g_1, ..., g_s$, there exists a unique interpolating polynomial $P(x) \in \P_{s - 1}$ passing through all points $(c_i, g_i)$.\\
+
+\textbf{Lagrange Polynomials:} For a set of abscissae $c_1, ... c_s$, the Lagrange polynomials $\ell_i, \; i = 1,...,s$ are defined by \[
+\ell_i(x) = \prod_{\begin{smallmatrix}i = 1 \\ i \neq j\end{smallmatrix}} \frac{x - c_j}{c_i - c_j}.
+\]
+The Lagrange polynomial $\ell_i$ is the interpolating polynomial through the data $g_j = \begin{cases*} 1 \text{ if } j = i \\ 0 \text{ if } j \neq i \end{cases*}$. $\{\ell_i\}$ form a basis for $\P_{s-1}$, and any polynomial $Q(x)$ has the simple form \[
+Q(x) = \sum_{i=1}^s Q(c_i) \ell_i(x) =  \sum_{i=1}^s g_i \ell_i(x) .   
+\]
 
 \end{multicols*}
 
