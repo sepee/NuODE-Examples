@@ -160,14 +160,27 @@ It measures how much error is introduced in a single timestep of size $h$.\\
 
 \textbf{Thm 3.2.1 (Convergence of One-Step Methods):} Given a differential equation and a one-step method $\Psi_h$ which is \textbf{consistent} and \textbf{stable}. Then the method is \textbf{convergent}.\\
 
-\textbf{Interpolating Polynomials:} Given distinct \textit{abscissa points} $c_1, ... c_s$ and \textit{data points} $g_1, ..., g_s$, there exists a unique interpolating polynomial $P(x) \in \P_{s - 1}$ passing through all points $(c_i, g_i)$.\\
+\textbf{Interpolating Polynomials:} Given $s$ distinct \textit{abscissa points} $c_0, ... c_s$ and \textit{data points} $g_0, ..., g_s$, there exists a unique interpolating polynomial $P(x) \in \P_{s - 1}$ passing through all points $(c_i, g_i)$.\\
 
-\textbf{Lagrange Polynomials:} For a set of abscissae $c_1, ... c_s$, the Lagrange polynomials $\ell_i, \; i = 1,...,s$ are defined by \[
+\textbf{Lagrange Polynomials:} For a set of abscissae $c_0, ... c_s$, the Lagrange polynomials $\ell_i, \; i = 1,...,s$ are defined by \[
 \ell_i(x) = \prod_{\begin{smallmatrix}i = 1 \\ i \neq j\end{smallmatrix}} \frac{x - c_j}{c_i - c_j}.
 \]
-The Lagrange polynomial $\ell_i$ is the interpolating polynomial through the data $g_j = \begin{cases*} 1 \text{ if } j = i \\ 0 \text{ if } j \neq i \end{cases*}$. $\{\ell_i\}$ form a basis for $\P_{s-1}$, and any polynomial $Q(x)$ has the simple form \[
+The Lagrange polynomial $\ell_i$ is the interpolating polynomial through the data $g_j = \begin{cases*} 1 \text{ if } j = i \\ 0 \text{ if } j \neq i \end{cases*}$. $\{\ell_i\}$ form a basis for $\P_{s - 1}$, and any polynomial $Q(x)$ has the simple form \[
 Q(x) = \sum_{i=1}^s Q(c_i) \ell_i(x) =  \sum_{i=1}^s g_i \ell_i(x) .   
 \]
+
+\textbf{Numerical Quadrature:} Given a smooth function $g(x) : \R \to \R$, and $s$ \textbf{quadrature points} $0 \leq c_1 < ... < c_s \leq 1$ we can estimate $\int_0^1 g(x) \,dx$ by integrating the corresponding interpolating polynomial $P(x) \in \P_{s - 1}$. Define the weights \[
+b_i = \int_0^1 \ell_i(x)\,dx.    
+\]
+Then our approximate integral is
+\[
+\int_0^1 g(x)\,dx \approx \int P(x)\,dx = \sum_{i=1}^s g(c_i) \int_0^1\ell_i(x)\,dx = \sum_{i=1}^s b_i g(c_i)
+\]
+Therefore for interval $[t_0, t_0 + h]$ we have
+\[
+    \int_{t_0}^{t_0 + h} g(x)\,dx \approx \int_{t_0}^{t_0 + h} P(x) \, dx = \sum_{i=1}^s b_i g(t_0 + hc_i).
+\]
+A quadrature rule has \textbf{order} $p$ if it integrates any polynomial $\in \P_{p-1}$ exactly. We always have $p \geq s$, and for optimal choice of $c_i$ we have $p = 2s$.
 
 \end{multicols*}
 
