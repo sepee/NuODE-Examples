@@ -162,8 +162,12 @@ It measures how much error is introduced in a single timestep of size $h$.\\
 
 \textbf{Interpolating Polynomials:} Given distinct \textit{abscissa points} $c_1, ... c_s$ and \textit{data points} $g_1, ..., g_s$, there exists a unique interpolating polynomial $P(x) \in \P_{s - 1}$ passing through all points $(c_i, g_i)$.\\
 
-\textbf{Lagrange Polynomials}
-
+\textbf{Lagrange Polynomials:} For a set of abscissae $c_1, ... c_s$, the Lagrange polynomials $\ell_i, \; i = 1,...,s$ are defined by \[
+\ell_i(x) = \prod_{\begin{smallmatrix}i = 1 \\ i \neq j\end{smallmatrix}} \frac{x - c_j}{c_i - c_j}.
+\]
+The Lagrange polynomial $\ell_i$ is the interpolating polynomial through the data $g_j = \begin{cases*} 1 \text{ if } j = i \\ 0 \text{ if } j \neq i \end{cases*}$. $\{\ell_i\}$ form a basis for $\P_{s-1}$, and any polynomial $Q(x)$ has the simple form \[
+Q(x) = \sum_{i=1}^s Q(c_i) \ell_i(x) =  \sum_{i=1}^s g_i \ell_i(x) .   
+\]
 
 \end{multicols*}
 
