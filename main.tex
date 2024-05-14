@@ -1,0 +1,164 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\usepackage[margin=0.25in]{geometry}
+\usepackage{multicol}
+\usepackage{xcolor}
+\linespread{1.2}
+
+\usepackage{amsmath}%for multiple integrals
+\usepackage{amssymb}%for math symbols like R (reals)
+\usepackage{esint}%for closed path integrals
+\usepackage{mathtools}% for curly weird arrows
+
+%\usepackage{parskip}% stops indentation
+\setlength{\columnseprule}{1pt} % sets with of column seperator line
+\def\columnseprulecolor{\color{lightgray}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\La}[1]{\mathcal{L}\left\{#1\right\}}
+\newcommand{\Linv}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
+\newcommand{\sep}{\vspace{-8pt}\hline\vspace{4pt}} % used for separating sections with hlines
+\renewcommand{\L}{\mathcal{L}}
+\renewcommand{\iff}{\Leftrightarrow}
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\del}{\partial}
+
+\usepackage{bm}
+% makes vectors bold instead of have arrow above
+\renewcommand{\vec}[1]{\bm{#1}}
+\newcommand{\x}{\vec{x}}
+\newcommand{\y}{\vec{y}}
+\newcommand{\g}{\vec{g}}
+\newcommand{\h}{\vec{h}}
+\newcommand{\e}{\vec{e}}
+\renewcommand{\c}{\vec{c}}
+\renewcommand{\a}{\vec{a}}
+\renewcommand{\u}{\vec{u}}
+\renewcommand{\v}{\vec{v}}
+
+\newcommand{\Mat}{$\text{Mat}$}
+\newcommand{\Maps}{$\text{Maps}$}
+\newcommand{\defeq}{:=}
+\newcommand{\pr}{\text{pr}}
+\newcommand{\bul}{\bullet}
+
+\newcommand{\norm}[1]{\Vert #1 \Vert}
+
+\newcommand{\inj}{\xhookrightarrow{}}
+
+%\newcommand{\gs}{\boxed{\begin{matrix}\text{general} \\ \text{sol}\end{matrix}}
+
+\setlength\parindent{0cm}
+
+%changes section heading font size
+\usepackage{sectsty}
+\sectionfont{\fontsize{12}{12}\selectfont}
+\subsectionfont{\fontsize{10}{10}\selectfont}
+
+%change space between sections
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+
+\raggedcolumns
+
+\newcommand{\GS}[1]{{
+    \left|\begin{smallmatrix}
+        \text{General} \\
+        \text{Solution}
+    \end{smallmatrix}:#1\right. }}
+
+
+\renewcommand{\SS}[1]{
+\left|\begin{smallmatrix}
+    \text{Specific} \\
+    \text{Solution}
+\end{smallmatrix}:#1\right.}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt} 
+
+\begin{multicols*}{2}
+
+\section{Preliminaries}
+For population $N(t)$, and max supported pop $N^*$. Let $n = \frac{N}{N^*}$.\\
+\textbf{Logistic model:} \[\frac{dn}{dt} = rn(1-n) \GS{ n(t) = \frac{ce^{rt}}{1 + ce^{rt}}}.\]\\
+\textbf{Logistic model (with predation):} $\frac{dn}{dt} = rn(1 - \frac{n}{s}) - \frac{n^2}{1 - n^2}$
+\textbf{Lotka-Volterra predator-prey model:} $n =$ prey population, $p =$ predator population:\\
+\[\frac{dn}{dt} = rn(1 - p), \quad \frac{dp}{dt} = p(1 - n)\]\\
+\textbf{Converting non-autonomous systems to autonomous:}\\
+For non-autonomous system of $d$ equations:\\
+$\frac{dy_1}{dt} = f_1(t, y_1, ... y_d)$, \\
+$\frac{dy_2}{dt} = f_2(t, y_1, ... y_d)$, \\
+$\vdots$\\
+$\frac{dy_d}{dt} = f_d(t, y_1, ... y_d)$. \\
+We can make it into an autonomous one by introducing the variable $y_{d+1} \equiv t$ in place of $t$, (thus creating an autonomous system of $d + 1$ variables) and introduce new indep var $s$ such that $ds/dt = 1$:\\
+$\frac{dy_1}{ds} = f_1(t, y_1, ... y_{d+1})$, \\
+$\frac{dy_2}{ds} = f_2(t, y_1, ... y_{d+1})$, \\
+$\vdots$\\
+$\frac{dy_d}{ds} = f_d(t, y_1, ... y_{d+1})$, \\
+$\frac{dy_{d + 1}}{ds} = 1$. \\
+\textbf{Picard's Thm:} let the function $f (\cdot, \cdot)$ be a continuous function of its arguments in a region of the plane containing the rectangle $D = \{(t,y) : t_0 \leq t \leq T, |y - y_0| \leq K\}$, $T,K > 0$. Suppose $\exists L$ (Lipschitz constant) such that $|f(t,u) - f(t,v)| \leq L |u - v|$ whenever $(t,u), (t,v) \in D$. Since $D$ closed $\And$ bounded, $\exists M_f > 0$ such that $M_f = \max\{|f(t,u)|:(t,u) \in D\}$. Assume $M_f(T - t_0) \leq K$. Then there exists a unique continuously differentiable function $t \mapsto y(t)$, defined on $[t_0, T]$, such that $\frac{dy}{dt} = f(t,y), y(t_0) = y_0$.
+
+\textit{Note:} $\frac{\del f}{\del y}$ being continuous $\implies$ existence of a Lipschitz constant,\\
+We can take $L = \sup_D\left[\frac{\del f}{\del y}\right]$.\\
+\textbf{Thm 1.3.2 (Local Existence / Uniqueness of Solutions for ODE Systems):} Suppose $f : \R \to \R^d \times \R^d$ is continuous and has continuous partial derivatives w.r.t. all components of the dependant var $y$ in a neighbourhood of the point $(t_0, y_0)$. Then there is an interval $I = (t_0 - \delta, t_0 + \delta)$ containing a unique function $y$ (continuously differentiable on $I$) that satisfies $\frac{dy}{dt} = f(t,y), y(t_0)  = y_0$.\\
+
+
+\section{Euler's Method and Taylor Series Methods}
+\textbf{Euler's Method:} for finding approximate solutions to $\frac{dy}{dt} = f(t,y)$ in time interval $t \in [a,b]$. \\ Let $t_m = a + mh$, $h \in \R$ small. Start with $y_0 = y(t_0) = y(a)$ and use iteration function $\boxed{y_{n + 1} = y_n + hf(t_n, y_n)}$. $y_i \approx y(t_i)$.\\
+\textbf{Error:} $\boxed{e_n = |y_n - y(t_n)|}$.\\
+\textbf{Lemma 2.6.1:} Suppose a given sequence of non-negative numbers $(v_n)$ satisfies $v_{n + 1} \leq Av_n + B$, $A > 1, B > 0$. Then for $n = 0,1,2,...$, $\boxed{v_n \leq A^nv_0 + \frac{A^n - 1}{A - 1}B}$.\\
+\textbf{Bound on error:} $\boxed{|e_n| \leq e^{(b-a)L}\frac{M}{2L}h = Dh}$ where $h$ is the timestep, $M$ bounds $|y^{\prime\prime}(t)|$, and $L$ bounds $\frac{\del y}{\del t}$.\\
+\textbf{Thm 2.6.1} Consider the IVP $\frac{dy}{dt} = f(t,y), y(a) = y_0$. Suppose $\exists$ unique, twice-differentiable function $f$, continuous everywhere with continuous, bounded partial derivative $\left|\frac{\del f}{\del y}\right| < L$ with $L > 0$.Then for $n = 0,1,...,N$, and some $D > 0$, the solution $y_n$ given by Euler's method at $t_n$ satisfies $\boxed{e_n = |y_n - y(t_n)| \leq Dh}$ where $h = (b-a)/N, t_n = a + hn$.\\
+\textbf{Big O (Landau) notation:} If method is $O(h^p)$ then the error decays at least as quickly as $h^p$ (for small $h$).\\
+$\boxed{(\exists \: h_0, C > 0):( \forall \: 0 < h < h_0), |z|\leq Ch^p \implies z = O(h^p) }$\\
+Say $z$ is of order $p$.\\
+\textbf{The Flow Map:} Consider IVP $\frac{dy}{dt} = f(t,y), y(a) = y_0$ with unique solution in $t \in [a,b]$. Starting at arbitrary $t_0 \in [a,b], y_0$ we may see where $y(t)$ ends up, denoted $y(t;t_0, y_0)$. \\
+Fix $t_0$ and look at the \textbf{flow map} $\boxed{\Phi_{t_0, h}(y_0) = y(t_0 + h;t_0, y_0)}$.
+(\textit{actually a family of maps parameterised by $h$}).\\
+\textbf{Numerical methods approximate flow maps:} Euler's method approximates flow map with $\hat{\Phi}_{t, h}(y) = y + hf(t,y)$.\\
+\textbf{One-step methods:} approximate the solution through the iteration of an approximated flow map.\\
+\textbf{Constructing Taylor series methods:} \\
+Start with Taylor series:\\
+$y(t_0 + h) = y(t_0) + y^\prime(t_0)h + \frac{1}{2}y^{\prime\prime}(t_0)h^2 + \frac{1}{6}y^{\prime\prime\prime}(t_0)h^3 + ...$. \\
+Also $y^\prime(t) = f(t, y) \implies$ \\
+$y^{\prime\prime} = \frac{d}{dt}f(t,y) = \frac{\del}{\del t} f(t,y)\frac{dt}{dt} + \frac{\del}{\del y} f(t,y)\frac{dy}{dt}$\\
+$ = \frac{\del}{\del t} f(t,y) + \frac{\del}{\del y} f(t,y)y^\prime = f_t + f_y f$. (By chain rule)\\
+$\Phi_{t,h}(y) = y + hf(t,y) + \frac{1}{2}h^2(f_t(t,y) + f_y(t,y)f(t,y)) + \frac{1}{6}y^{\prime\prime\prime}h^3 + ...$ \\
+Which we can truncate to get the 2nd order Taylor series method\\
+$\boxed{\hat{\Phi}_{t,h}(y) = y + hf(t,y) + \frac{1}{2}h^2(f_t(t,y) + f_y(t,y)f(t,y))}$.\\
+
+
+\section{Convergence of One-Step Methods}
+
+\textbf{Def 3.1.2 (Convergence):} A method is said to be \textbf{convergent} iff for any $T$, \[\lim_{\begin{smallmatrix}
+    h \to 0 \\ h = T/N
+\end{smallmatrix}} \max_{n = 0,1,...,N}{\Vert e_n \Vert} = 0.\]
+
+\textbf{Def 3.2.1 (Local Error):} The \textbf{local error} of a one-step method is the difference between the flow map $\Phi_h$ and it's descrete approximation $\Psi_h$ \[
+le(y, h) = \Psi_h(y) - \Phi_h(y).
+\] It measures how much error is introduced in a single timestep of size $h$.\\
+
+\textbf{Def 3.2.2 (Consistency):} Suppose the local error for our method satisfies \[
+\Vert le(y, h) \Vert \leq Ch^{p + 1}
+\] where $C$ is a constant that depends on $y(t)$ and it's derivatives, and $p \geq 1$. Then the method is \textbf{consistent} at order $p$.\\
+
+\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independant Lipschitz condition on $D$ (spatial domain) \[
+\norm{\Psi_h(u) - \Psi_h(v)} \leq (1 + h\hat L)\norm{u - v} \quad \forall\, u, v \in D.
+\] Then the method is \textbf{stable}. \textit{Note $\hat L$ need not be the same Lipschitz constant as for the vector field.}\\
+
+\textbf{Thm 3.2.1 (Convergence of One-Step Methods):} Given a differential equation and a one-step method $\Psi_h$ which is \textbf{consistent} and \textbf{stable}. Then the method is \textbf{convergent}.\\
+
+
+\end{multicols*}
+
+\end{document}
