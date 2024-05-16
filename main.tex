@@ -182,6 +182,42 @@ Therefore for interval $[t_0, t_0 + h]$ we have
 \]
 A quadrature rule has \textbf{order} $p$ if it integrates any polynomial $\in \P_{p-1}$ exactly. We always have $p \geq s$, and for optimal choice of $c_i$ we have $p = 2s$.
 
+\textbf{One-Step Collocation:} Given an ODE we wish to construct the \textbf{collocation polynomial} $u(t) \in \R^d$ that satisfies 
+\begin{equation*}
+    u(t_0) = y_0\\
+    u^\prime(t_0 + c_ih) = f(u(t_0 + c_i h)).
+\end{equation*}
+In particular, it agrees with our solut at $t_0$, and it's derivative matches that of the solution at each $c_1,...,c_s$. We can use such a polynomial to approximate a numerical solution to our ODE by decomposing it's derivative $u^\prime$ into Lagrange polynomial components, and then integrating over $[t_0, t_0 + h]$ to get $u(t_0 + h) = u(t_1)$.\\
+Let $F_i = u^\prime(t_0 + hc_i)$ be the value of the derivative of the polynomial at node $c_i$. Then 
+\begin{align*}
+    & F_i = f(y_0 + h\sum_{j = 1}^s a_{ij}F_j), \; \text{(A)}\\
+    & y_{n+1} = y_n + h\sum_{i = 1}^s b_i F_i. \; \text{(B)}
+\end{align*} 
+where 
+\begin{align*}
+    & a_{ij} = \int_0^{c_i}\ell_j(x)\,dx,\\
+    & b_i = \int_0^1\ell_i(x)\,dx.
+\end{align*}
+First solve the sd-dimensional system of non-linear equations given by (A), and plug into (B).
+
+\textbf{Rem 3.6.1 (Continuous Approximations):} Collocation provides a continuous approximation $u(t)$ of the solution $y(t)$ on each interval $[t_n, t_{n+1}]$.
+
+\textbf{Rem 3.6.2 (Optimal Node Placement):} For optimal order of accuracy, use \textbf{Gauss-Legendre} collocation methods. This means placing nodes at roots of shifted Legendre polynomials. For $s = 1, 2, 3$, the optimal nodes are \begin{align*}
+    c_1 = \frac{1}{2}, \quad &p = 2, \\
+    c_1 = \frac{1}{2} - \frac{\sqrt{3}}{6},\; c_2 = \frac{1}{2} + \frac{\sqrt{3}}{6}, \quad &p = 4, \\
+    c_1 = \frac{1}{2} - \frac{\sqrt{15}}{10},\; c_2 = \frac{1}{2} ,\; c_3 =\frac{1}{2} + \frac{\sqrt{15}}{10}, \quad &p = 6.
+\end{align*}\\
+
+\textbf{Runge-Kutta Methods:} are a generalisation of collocation methods, since they don't have coefficients that rely on integrals of Lagrange polynomials, they can have any coefficients. A \textbf{Runge-Kutta} method is any method of form 
+\begin{align*}
+    Y_i &= y_n + h \sum_{j = 1}^s a_{ij}f(Y_j), \quad i = 1,...,s,\\
+    y_{n+1} &= y_n + h\sum_{i = 1}^s b_i f(Y_i).
+\end{align*}
+where $s$ is the \textbf{number of stages}, $b_i$ are the \textbf{weights}, and $a_{ij}$ are the \textbf{internal coefficients}. Such a method generates the discrete flow-map
+\[
+\Psi_h(y) = y + h \sum_{i = 1}^s b_i f(Y_i(y, h)).
+\]\\
+
 \end{multicols*}
 
 \end{document}
