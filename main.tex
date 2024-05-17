@@ -319,8 +319,58 @@ Then the fixed point $y^*$ is \textbf{asymptotically stable} for the iteration $
 The fixed point $y^*$ is \textbf{unstable} if $\rho(\Psi^\prime(y^*)) > 1$.\\
 The marginal case $\rho(\Psi^\prime(y^*)) = 1$ is delicate and must be considered on a case-by-case basis.\\
 
+\textbf{Stability Function:} Consider an RK method with $y_{n+1} = R(h\lambda)y_n$ (for scalar ODEs). Then $R(h\lambda)$ is a rational function, and if the method is \textbf{explicit} then $R(h\lambda)$ is a polynomial. Call $R(h\lambda)$ the \textbf{stability function} of our method.
 
+\textbf{Matrix Representation of RK Method (Scalar):}\\
+ An RK method for a scalar ODE $y^\prime = \mu y$ with internal stages 
+\[
+Y_i = y_n + \mu\sum_{j=1}^s a_{ij}Y_j, \quad i = 1,2,...,s    
+\]
+can be written in matrix form as
+\begin{align*}
+    Y &= y_n \mathbf{1} + \mu A Y \\
+    Y &= y_n(I - \mu A)^{-1}\mathbf{1}     
+\end{align*}
+where $\mathbf{1} = (1,...,1)^T \in \R^s$. Then
+\begin{align*}
+    y_{n+1} &= y_n + \mu \sum_{j=1}^s b_j Y_j\\
+    y_{n+1} &= y_n + \mu b^T Y 
+\end{align*}
+and so 
+\[
+y_{n+1} = R(\mu)y_n, \quad R(\mu) = 1 + \mu b^T(I - \mu A)^{-1}\mathbf{1}.  
+\]
+\textbf{Matrix Representation of RK Method (Vector):}\\
+Consider an ODE $y^\prime = By$, $y \in \R^d$ and RK method definde by
+\begin{align*}
+    Y_i     &= y_n + h\sum_{j=1}^s a_{ij}BY_j \\
+    y_{n+1} &= y_n + h\sum_{j=1}^s b_iBY_i.
+\end{align*}
+Expand $y_n, y_{n+1}, Y_i$ in the eigenbasis of $B$, and let $U$ be the matrix with eigenvectors of $B$ as columns. Write $B = U\Lambda U^{-1}$ where $\Lambda$ is diagonal matrix of eigenvalues. Define $z_n, Z_i$ by 
+\[
+y_n = Uz_n, \quad Y_i = UZ_i, \quad i = 1,...,s,    
+\]
+and then rewrite our RK method as 
+\begin{align*}
+    Z_i     &= y_n + h\sum_{j=1}^s a_{ij}\Lambda Z_j \\
+    z_{n+1} &= z_n + h\sum_{j=1}^s b_i\Lambda Z_j.
+\end{align*}
+and so, since $\Lambda$ is diagonal, our system decouples into $d$ independant scalar iterations, which we know how to deal with.\\
 
+\textbf{Thm 4.5.1:} Given the ODE $y^\prime = By$, where $y \in \R^d$, and $B$ has a basis of eigenvectors and the eigenvalues $\lambda_1, ..., \lambda_d$, consider applying a given RK method. The RK method has an (asymptotically) stable fixed point at the orogin when aplied to 
+\[
+\frac{dy}{dt} = By    
+\]
+iff the same method has an (asymptotically) stable fixed point at the origin when applied to each of the scalar differential equations 
+\[
+\frac{dy}{dt} = \lambda_i y. 
+\]
+
+\textbf{Cor 4.5.1:} Consider a linear ODE $\frac{dy}{dt} = By$ with diagonalizable matrix $B$. Let an RK method be given with stability fucntion $R$. The origin is stable for this RK method to $\frac{dy}{dt} = By$ (at stepsize h) iff
+\[
+|R( h\lambda)| < 1    
+\]
+forall eigenvalues $\lambda \in \sigma(B)$. (The origin is unstable if $|R( h\lambda)| > 1 $ for any eigenvalue $\lambda$).
 
 \end{multicols*}
 
