@@ -5,7 +5,7 @@
 \usepackage[margin=0.25in]{geometry}
 \usepackage{multicol}
 \usepackage{xcolor}
-\linespread{1.2}
+\linespread{1.05}
 
 \usepackage{amsmath}%for multiple integrals
 \usepackage{amssymb}%for math symbols like R (reals)
@@ -383,6 +383,102 @@ The boundary of the stability region is the set of all values such that $R(\mu) 
 
 \textbf{A-Stability:} A numerical method is \textbf{A-stable} if its stability region contains the entire left half-plane. In this case, the method will be stable independent of $h$.
 
+\section{Linear Multistep Methods}:
+
+\textbf{Def 5.0.1 (k-step LMM)}: A \textbf{k-step linear multistep method} (LMM) is a numerical method of form
+\[
+    \sum_{j=0}^k \alpha_j y_{n + j} = h\sum_{j=0}^k \beta_j f(y_{n + j})
+\]
+where $\alpha_k \neq 0$ and either $\alpha_0 \neq 0 $ or $\beta_0 \neq 0$. Usually normalize coefficients so that $\alpha_k - 1$ or $\sum_j \beta_j = 1$. If $\beta_k \neq 0$ then the method is \textbf{implicit}, otherwise it is \textbf{explicit}. 
+
+\textbf{Adams-Bashford Methods:} Explicit methods derived by finding interpolating polynomial $\Pi_k^f(t)$ passing through $y^\prime_n,...,y\prime_{n+k-1}$ and integrate it to next timestep so 
+\[
+y_{n+k} = y_{n+k-1} + \int_{t_{n+k-1}}^{t_{n+k}} \Pi_k^f(t)\,dt.
+\]
+Note the $1$-step Adams-Bashford method is the Euler rule.\\
+
+\textbf{Adams-Moulton Methods:} Implicit methods derived by finding interpolating polynomial $\hat \Pi_k^f(t)$ passing through $y\prime_n,...,y\prime_{n+k}$ (where $y_{n+k}$ is not yet known) and integrate it to next timestep so 
+\[
+y_{n+k} = y_{n+k-1} + \int_{t_{n+k-1}}^{t_{n+k}} \Pi_k^f(t)\,dt.
+\]
+Note the $1$-step Adams-Moulton method is the Trapezoidal rule.
+
+\textbf{Algebra of Operators:} Operators are generalisations of functions, that take functions as inputs. Let $g(t): \R \to \R$. Here are some Operators:
+
+\begin{tabular}{l | l}
+     \textbf{Operator}   & \textbf{Definition} \\
+     \hline
+     Identity            & $1 g(t) = g(t)$ \\
+     Shift               & $E_sg(t) = g(t + s)$ \\
+     Forward Difference  & $\Delta_hg(t) = g(t + h) - g(t) = (E_h - 1)g(t)$ \\
+     Backward Differenec & $\nabla_hg(t) = g(t) - g(t - h) = (1 - E_h^{-1})g(t)$ \\
+     Differential        & $Dg(t) = g^\prime(t)$
+\end{tabular}
+
+\textbf{Differential Operator Identities}:
+\begin{align*}
+    E_h &= e^{hD}\quad \small(\text{\textit{TS expansion similar to exp power series}})\normalsize\\
+    D   &= \frac{1}{h}\ln\left[1 + \Delta_h\right]\\
+    D   &= \frac{1}{h}\left[\nabla_h + \frac{1}{2}\nabla_h^2 + \frac{1}{2}\nabla_h^3 + ... \right]\\
+\end{align*}
+
+\textbf{BDF Methods:} Use the trancated backwards difference operator expansion of the differential operator $D$ to approximate f(t,y(t)). Below we derive the first BDF method (\textit{same as backwards Euler}).
+\begin{align*}
+    \frac{1}{h}\left[\nabla_h + \frac{1}{2}\nabla_h^2 + \frac{1}{2}\nabla_h^3 + ... \right]y(t) &= Dy(t) = f(t,y(t))\\
+    \frac{1}{h}\nabla_h y(t) &\approx f(t,y(t))\\
+    y(t) - y(t - h) &\approx hf(t,y(t))\\
+    y_n - y_{t-1} &= hf(t, y(t)).
+\end{align*}
+
+\textbf{Characteristic Polynomials:} Associated with an \textbf{LMM} are the polynomials
+\[
+\rho(\zeta) = \sum_{j=0}^k \alpha_j \zeta^j, \quad \sigma(\zeta) = \sum_{j=0}^k \beta_j\zeta^j    
+\]
+called the \textbf{first characteristic polynomial} and \textbf{second characteristic polynomial} respectively.
+
+\textbf{Residual:} The \textbf{residual} of a linear multistep method at time $t_{n+k}$ is 
+\[
+r_n = \sum_{j=0}^k \alpha_jy(t_{n+j}) - h\sum_{j=0}^k\beta_jy^\prime(t_{n+j}).
+\] 
+\small(this is actually the residual accumulated in the $n + k - 1$ step)\normalsize. An LMM has \textbf{order of consistency} $p$ if 
+\[
+r_n = O(h^{p+1}).    
+\]
+for all sufficiently smooth $f$.\\
+
+\textbf{Consistency Conditions:} The following conditions are equivelant for an LMM having \textbf{order of consistency} $p \geq 1$.
+\begin{align*}
+    \bul& \; \rho(e^z) - z\sigma(e^z) = O(z^{p + 1});\\
+    \bul& \; \frac{\rho(z)}{\log z} - \sigma(z) = O((z - 1)^p).
+\end{align*}
+
+\textbf{Def 5.4.1 (The Root Condition):} An LMM is said to satisfy the \textbf{root condition} if all roots $\zeta$ of 
+\[
+\rho(\zeta)    
+\]
+lie in the unit disk $(|\zeta| \leq 1)$, and any root on the unit circle $(|\zeta| = 1)$ has multiplicity $1$.\\
+
+\textbf{Thm 5.4.1 (Convergence Thm):} For a well-behaved ODE ($f$ has coninuous, bounded partial derivatives), suppose an LMM is equipped with a procedure satisfying $\lim_{h \to 0} y_j = y(t_0 + jh)$ for $j = 1,...,k - 1$. Then the method is guaranteed
+to converge to the exact solution on a fixed interval as $h \to 0$ iff it has order of consistency $p \geq 1$ and satisfies the \textbf{root condition}.\\
+
+\textbf{Thm 5.4.2 (Maximum Order):} the maximum order of a $k$-step method satisfying the root condition is $p = k$ for explicit methods and, for implicit methods, $p = k + 1$ for odd $k$ and $p = k + 2$ for even $k$.
+
+\textbf{Stability Regions:} The \textbf{stability region} $\mathcal S$ of an LMM is the set of all points $z \in \C$ such that all roots $\zeta$ of the polynomial
+\[
+\rho(\zeta) - z\sigma(\zeta) = 0    
+\]
+satisfy $|\zeta| < 1$.
+
+\textbf{Boundary of Stability Region:}
+\[
+\del \mathcal S = \left\{z = \frac{\rho(e^{i\theta})}{\sigma(e^{i\theta})} : \theta \in [0,2\pi]\right\}    
+\]
+
+\textbf{A-Stability:} A method is \textbf{A-stable} (\textbf{unconditionally stable}) if the left half plane $\subset \C$ is contained in $\mathcal S$. In this case the method is stable for any choice of stepsize $h$.\\
+
+\textbf{Thm 5.5.1 (Max Order of A-Stable Methods):} An A-Stable LMM has order $p \leq 2$.\\
+
+\textbf{A$(\mathbf \alpha)$-Stability:} A method is \textbf{A$(\alpha)$-stable} if the wedge $\{z \in \C : |\text{Arg}(z) - \pi| < \alpha \} \subset \mathcal S$. In this case for any $\lambda$ in the $\alpha$-wedge of stability, the method is unconditionally stable.
 
 
 \end{multicols*}
