@@ -156,7 +156,7 @@ It measures how much error is introduced in a single timestep of size $h$.\\
 \[ \Vert le(y, h) \Vert \leq Ch^{p + 1} \]
  where $C$ is a constant that depends on $y(t)$ and it's derivatives, and $p \geq 1$. Then the method is \textbf{consistent} at order $p$.\\
 
-\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independant Lipschitz condition on $D$ (spatial domain)
+\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independent Lipschitz condition on $D$ (spatial domain)
  \[ \norm{\Psi_h(u) - \Psi_h(v)} \leq (1 + h\hat L)\norm{u - v} \quad \forall\, u, v \in D. \]
  Then the method is \textbf{stable}. \textit{Note $\hat L$ need not be the same Lipschitz constant as for the vector field.}\\
 
@@ -355,7 +355,7 @@ and then rewrite our RK method as
     Z_i     &= y_n + h\sum_{j=1}^s a_{ij}\Lambda Z_j \\
     z_{n+1} &= z_n + h\sum_{j=1}^s b_i\Lambda Z_j.
 \end{align*}
-and so, since $\Lambda$ is diagonal, our system decouples into $d$ independant scalar iterations, which we know how to deal with.\\
+and so, since $\Lambda$ is diagonal, our system decouples into $d$ independent scalar iterations, which we know how to deal with.\\
 
 \textbf{Thm 4.5.1:} Given the ODE $y^\prime = By$, where $y \in \R^d$, and $B$ has a basis of eigenvectors and the eigenvalues $\lambda_1, ..., \lambda_d$, consider applying a given RK method. The RK method has an (asymptotically) stable fixed point at the orogin when aplied to 
 \[
@@ -370,7 +370,20 @@ iff the same method has an (asymptotically) stable fixed point at the origin whe
 \[
 |R( h\lambda)| < 1    
 \]
-forall eigenvalues $\lambda \in \sigma(B)$. (The origin is unstable if $|R( h\lambda)| > 1 $ for any eigenvalue $\lambda$).
+forall eigenvalues $\lambda \in \sigma(B)$. (The origin is unstable if $|R( h\lambda)| > 1 $ for any eigenvalue $\lambda$).\\
+
+\textbf{Stability Region:} The \textbf{stability region} of a numerical method is the set of all points such that $\hat R(\mu) = |R(\mu)| < 1$.\\
+
+RK4 has the stability function
+\[
+R(\mu) = 1 + \mu + \frac{1}{2}\mu^2 + \frac{1}{6}\mu^3 + \frac{1}{24}\mu^4.
+\]
+
+The boundary of the stability region is the set of all values such that $R(\mu) = e^{i\theta}$, that is $R(\mu)$ lies on the unit circle.\\
+
+\textbf{A-Stability:} A numerical method is \textbf{A-stable} if its stability region contains the entire left half-plane. In this case, the method will be stable independent of $h$.
+
+
 
 \end{multicols*}
 
