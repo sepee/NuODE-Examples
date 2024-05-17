@@ -5,7 +5,7 @@
 \usepackage[margin=0.25in]{geometry}
 \usepackage{multicol}
 \usepackage{xcolor}
-\linespread{1.2}
+\linespread{1.05}
 
 \usepackage{amsmath}%for multiple integrals
 \usepackage{amssymb}%for math symbols like R (reals)
@@ -21,6 +21,8 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\I}{\mathbb{I}}
 \renewcommand{\P}{\mathbb{P}}
+
+\newcommand{\F}{\mathcal{F}}
 
 \newcommand{\La}[1]{\mathcal{L}\left\{#1\right\}}
 \newcommand{\Linv}[1]{\mathcal{L}^{-1}\left\{#1\right\}}
@@ -154,7 +156,7 @@ It measures how much error is introduced in a single timestep of size $h$.\\
 \[ \Vert le(y, h) \Vert \leq Ch^{p + 1} \]
  where $C$ is a constant that depends on $y(t)$ and it's derivatives, and $p \geq 1$. Then the method is \textbf{consistent} at order $p$.\\
 
-\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independant Lipschitz condition on $D$ (spatial domain)
+\textbf{Def 3.2.3 (Stability):} Suppose that a method satisfies an $h-$independent Lipschitz condition on $D$ (spatial domain)
  \[ \norm{\Psi_h(u) - \Psi_h(v)} \leq (1 + h\hat L)\norm{u - v} \quad \forall\, u, v \in D. \]
  Then the method is \textbf{stable}. \textit{Note $\hat L$ need not be the same Lipschitz constant as for the vector field.}\\
 
@@ -181,6 +183,303 @@ Therefore for interval $[t_0, t_0 + h]$ we have
     \int_{t_0}^{t_0 + h} g(x)\,dx \approx \int_{t_0}^{t_0 + h} P(x) \, dx = \sum_{i=1}^s b_i g(t_0 + hc_i).
 \]
 A quadrature rule has \textbf{order} $p$ if it integrates any polynomial $\in \P_{p-1}$ exactly. We always have $p \geq s$, and for optimal choice of $c_i$ we have $p = 2s$.
+
+\textbf{One-Step Collocation:} Given an ODE we wish to construct the \textbf{collocation polynomial} $u(t) \in \R^d$ that satisfies 
+\begin{equation*}
+    u(t_0) = y_0\\
+    u^\prime(t_0 + c_ih) = f(u(t_0 + c_i h)).
+\end{equation*}
+In particular, it agrees with our solut at $t_0$, and it's derivative matches that of the solution at each $c_1,...,c_s$. We can use such a polynomial to approximate a numerical solution to our ODE by decomposing it's derivative $u^\prime$ into Lagrange polynomial components, and then integrating over $[t_0, t_0 + h]$ to get $u(t_0 + h) = u(t_1)$.\\
+Let $F_i = u^\prime(t_0 + hc_i)$ be the value of the derivative of the polynomial at node $c_i$. Then 
+\begin{align*}
+    & F_i = f(y_0 + h\sum_{j = 1}^s a_{ij}F_j), \; \text{(A)}\\
+    & y_{n+1} = y_n + h\sum_{i = 1}^s b_i F_i. \; \text{(B)}
+\end{align*} 
+where 
+\begin{align*}
+    & a_{ij} = \int_0^{c_i}\ell_j(x)\,dx,\\
+    & b_i = \int_0^1\ell_i(x)\,dx.
+\end{align*}
+First solve the sd-dimensional system of non-linear equations given by (A), and plug into (B).
+
+\textbf{Rem 3.6.1 (Continuous Approximations):} Collocation provides a continuous approximation $u(t)$ of the solution $y(t)$ on each interval $[t_n, t_{n+1}]$.
+
+\textbf{Rem 3.6.2 (Optimal Node Placement):} For optimal order of accuracy, use \textbf{Gauss-Legendre} collocation methods. This means placing nodes at roots of shifted Legendre polynomials. For $s = 1, 2, 3$, the optimal nodes are \begin{align*}
+    c_1 = \frac{1}{2}, \quad &p = 2, \\
+    c_1 = \frac{1}{2} - \frac{\sqrt{3}}{6},\; c_2 = \frac{1}{2} + \frac{\sqrt{3}}{6}, \quad &p = 4, \\
+    c_1 = \frac{1}{2} - \frac{\sqrt{15}}{10},\; c_2 = \frac{1}{2} ,\; c_3 =\frac{1}{2} + \frac{\sqrt{15}}{10}, \quad &p = 6.
+\end{align*}\\
+
+\textbf{Runge-Kutta Methods (Autonymous Case):} Generalisation of collocation methods, since they don't have coefficients that rely on integrals of Lagrange polynomials, they can have any coefficients. A \textbf{Runge-Kutta} method is any method of form 
+\begin{align*}
+    Y_i &= y_n + h \sum_{j = 1}^s a_{ij}f(Y_j), \quad i = 1,...,s,\\
+    y_{n+1} &= y_n + h\sum_{i = 1}^s b_i f(Y_i).
+\end{align*}
+where $s$ is the \textbf{number of stages}, $b_i$ are the \textbf{weights}, and $a_{ij}$ are the \textbf{internal coefficients}. Such a method generates the discrete flow-map
+\[
+\Psi_h(y) = y + h \sum_{i = 1}^s b_i f(Y_i(y, h)).
+\]\\
+\textbf{Butcher Tables:} Store coefficients of Runge-Kutta methods in form 
+\[
+\begin{tabular}{ c | c }
+    c & A \\ 
+    \hline
+     & $b^T$ \\  
+   \end{tabular}
+\] where $c = (c_i), \; b = (b_j), \; A = (a_{ij})$. If $A$ is lower triangular (with $0$s on diag) then the method is \textbf{explicit}, otherwise \textbf{implicit}.
+
+\textbf{Butcher Table Examples:} \\
+Euler Method (Explicit):
+\[
+\begin{tabular}{ c | c }
+    0 & 0 \\ 
+    \hline
+     & 1 \\  
+   \end{tabular}.
+\] Trapezoidal (Implicit):
+\[
+\begin{tabular}{ c | c c }
+    0 & \\ 
+    1 & $\frac{1}{2}$ & $\frac{1}{2}$ \\
+    \hline
+     & $\frac{1}{2}$ & $\frac{1}{2}$ \\  
+   \end{tabular}.
+\]
+
+\textbf{Order Conditions for RK Methods:}\\
+Consider an RK method with $b = (b_j), \; A = (a_{ij})$. For the order to be $p$, the following conditions must be satisfied (as well as any conditions for it to be $<p$):
+\begin{align*}
+    p = 1 &\implies \sum_{i=1}^s b_i = 1, \\
+    p = 2 &\implies \sum_{i=1}^s b_ic_i = \frac{1}{2}, \quad \small\text{That is } b^Tc = \frac{1}{2}\normalsize,\\
+    p = 3 &\implies \sum_{i=1}^s b_ic_i^2 = \frac{1}{3} \;\text{And}\; \sum_{i=1}^s\sum_{j=1}^s b_ia_{ij}c_j = \frac{1}{6}.
+\end{align*}
+There is no explicit RK method of order greater than 4. For best order, use Gauss-Legendre methods, which have order $p = 2s$.\\
+
+\textbf{Def 4.1.1 (Fixed Point):} A point $y^*$ is a fixed point of $f(y)$ if $f(y^*) = 0$. Soluion passing through a fixed point will be $y(t) \equiv y^*$, constant in time. Denote set of all fixed points of an ode system as $\F = \{y \in \R^d : \Phi(y) = y\}$\\
+
+\textbf{Def 4.2.1 (Fixed Point of Numerical Method):} Consider a one-step numerical method with described by the map $\Psi_h(y)$. Then a point $y^*$ is a \textbf{fixed point} if $\Psi_h(y^*) = y^*$, and therefore produces the constant in time approximate solution $y_n \equiv y^*$. Denote the set of all fixed points of $\Psi_h$ by $\F_h = \{y \in \R^d : \Psi_h(y) = y\}$.\\
+
+For the Euler method $\F = \F_h$.\\
+
+Fixed points in $\F_h$ that are not fixed points of $\F$ are called \textbf{spurious fixed points}.\\
+
+\textbf{Thm 4.2.1:} For Runge-Kutta methods, $\F_h \supseteq \F$.
+
+Generally spurious fixed points of RK methods move depending on $h$, and usually tend to $\infty$.\\
+
+\textbf{Def 4.3.1 (Stability and Asymptotic Stability):} $y^*$ is:
+\textbf{stable} for the given ODE if $\forall \, \varepsilon > 0$ (sufficiently small) $\exists \delta > 0$ such that $\forall \, t > 0$
+\[
+    \Vert y_0 - y^*\Vert  < \delta \implies \Vert y(t; y_0) - y^* \Vert < \epsilon;
+\]
+\textbf{asymptotically stable} if it is \textbf{stable} and $\exists \gamma > 0 $ such that for any initial condition such that $\Vert y-0 \Vert < \gamma$ 
+\[
+    \lim_{t \to \infty} \Vert y(t; y_0) - y^* \Vert = 0;
+\]
+\textbf{unstable} if it is not \textbf{stable}.\\
+
+\textbf{Thm 4.3.1 (Linearisation Thm):} Consider the equation in $\R^d$ 
+\[
+\frac{dy}{dt} = By + F(y)
+\]
+subject to initial condition $y(0) = y_0 \in \R^d$. Assume $B \in \Mat(d, \R)$ has all eigenvalues with negative real parts, and $F(y) \in C^1$ in a neighbourhood of $y = 0 \in \R^d$, with $F(0) = 0 \in \R^d$ and $F^\prime(0) = 0 \in \R^{d \times d}$, where $F^\prime(y)$ is the jacobian of $F$. Then $y = 0 \in \R^d$ is an \textbf{asymptotically stable} critical point. If $B$ has any eigenvalues with positive real part, then $y = 0$ is \textbf{unstable}.\\
+
+\textbf{Thm 4.3.2 (Linearisation Thm II):} Suppose that our derivative $f \in C^2$ has a fixed point $y^*$. If the eigenvalues of 
+\[
+J = f^\prime(y)    
+\]
+lie strictly in the left half plane of $\C$, then $y^*$ is \textbf{asymptotically stable}. If J has any eigenvalues in the right half plane of $\C$, then $y^*$ is \textbf{unstable}.\\
+
+\textbf{Def 4.4.1 (Stability and Asymptotic Stability of Maps):}\\
+Consider a general map $\Psi : \R \to R$ and fixed point $y^*$ of $\Psi$ such that $\Psi(y^*) = y^*$. Define $y^n(y_0)$ to be $n$ applications of $\Psi$ to $y_0$, so $y^2(y_0) = \Psi(\Psi(y_0))$. We say that $y^*$ is:\\
+\textbf{stable} for the given ODE if $\forall \, \varepsilon > 0$ (sufficiently small) $\exists \delta > 0$ such that $\forall \, t > 0$
+\[
+    \Vert y_0 - y^*\Vert  < \delta \implies \Vert y^n(y_0) - y^* \Vert < \epsilon;
+\]
+\textbf{asymptotically stable} if it is \textbf{stable} and $\exists \gamma > 0 $ such that for any initial condition such that $\Vert y-0 \Vert < \gamma$ 
+\[
+    \lim_{t \to \infty} \Vert y^n(y_0) - y^* \Vert = 0;
+\]
+\textbf{unstable} if it is not \textbf{stable}.\\
+
+\textbf{spectral radius:} Let $K$ be a matrix. Then $\rho(K)$ denotes the \textbf{spectral radius} of $K$, the radius of the smallest circle centered at the origin enclosing all eigenvalues of $K$.
+
+\textbf{Thm 4.4.1 (Spectral Radius and Stability):}\\
+Let $z_n = \Vert K^ny_0 \Vert$.\\
+Then $z_n \to 0$ as $n \to \infty$ for all $y_0$, iff $\rho(K) < 1$.\\
+Moeover, $z_n \to \infty$ for some $y_0$ iff $\rho(K) > 1$.\\
+Finally, if $\rho(K) = 1$ then $z_n$ remains bounded as $n \to \infty$.\\
+
+\textbf{Thm 4.4.2 (Stability and Asymptotic Stability of Iteration Maps):} \\
+Let $\Psi$ be a smooth $(C^2)$ map.\\
+Then the fixed point $y^*$ is \textbf{asymptotically stable} for the iteration $y_{n+1} = \Psi(y_n)$ if 
+\[
+    \rho(\Psi^\prime(y^*)) < 1.
+\] 
+The fixed point $y^*$ is \textbf{unstable} if $\rho(\Psi^\prime(y^*)) > 1$.\\
+The marginal case $\rho(\Psi^\prime(y^*)) = 1$ is delicate and must be considered on a case-by-case basis.\\
+
+\textbf{Stability Function:} Consider an RK method with $y_{n+1} = R(h\lambda)y_n$ (for scalar ODEs). Then $R(h\lambda)$ is a rational function, and if the method is \textbf{explicit} then $R(h\lambda)$ is a polynomial. Call $R(h\lambda)$ the \textbf{stability function} of our method.
+
+\textbf{Matrix Representation of RK Method (Scalar):}\\
+ An RK method for a scalar ODE $y^\prime = \mu y$ with internal stages 
+\[
+Y_i = y_n + \mu\sum_{j=1}^s a_{ij}Y_j, \quad i = 1,2,...,s    
+\]
+can be written in matrix form as
+\begin{align*}
+    Y &= y_n \mathbf{1} + \mu A Y \\
+    Y &= y_n(I - \mu A)^{-1}\mathbf{1}     
+\end{align*}
+where $\mathbf{1} = (1,...,1)^T \in \R^s$. Then
+\begin{align*}
+    y_{n+1} &= y_n + \mu \sum_{j=1}^s b_j Y_j\\
+    y_{n+1} &= y_n + \mu b^T Y 
+\end{align*}
+and so 
+\[
+y_{n+1} = R(\mu)y_n, \quad R(\mu) = 1 + \mu b^T(I - \mu A)^{-1}\mathbf{1}.  
+\]
+\textbf{Matrix Representation of RK Method (Vector):}\\
+Consider an ODE $y^\prime = By$, $y \in \R^d$ and RK method definde by
+\begin{align*}
+    Y_i     &= y_n + h\sum_{j=1}^s a_{ij}BY_j \\
+    y_{n+1} &= y_n + h\sum_{j=1}^s b_iBY_i.
+\end{align*}
+Expand $y_n, y_{n+1}, Y_i$ in the eigenbasis of $B$, and let $U$ be the matrix with eigenvectors of $B$ as columns. Write $B = U\Lambda U^{-1}$ where $\Lambda$ is diagonal matrix of eigenvalues. Define $z_n, Z_i$ by 
+\[
+y_n = Uz_n, \quad Y_i = UZ_i, \quad i = 1,...,s,    
+\]
+and then rewrite our RK method as 
+\begin{align*}
+    Z_i     &= y_n + h\sum_{j=1}^s a_{ij}\Lambda Z_j \\
+    z_{n+1} &= z_n + h\sum_{j=1}^s b_i\Lambda Z_j.
+\end{align*}
+and so, since $\Lambda$ is diagonal, our system decouples into $d$ independent scalar iterations, which we know how to deal with.\\
+
+\textbf{Thm 4.5.1:} Given the ODE $y^\prime = By$, where $y \in \R^d$, and $B$ has a basis of eigenvectors and the eigenvalues $\lambda_1, ..., \lambda_d$, consider applying a given RK method. The RK method has an (asymptotically) stable fixed point at the orogin when aplied to 
+\[
+\frac{dy}{dt} = By    
+\]
+iff the same method has an (asymptotically) stable fixed point at the origin when applied to each of the scalar differential equations 
+\[
+\frac{dy}{dt} = \lambda_i y. 
+\]
+
+\textbf{Cor 4.5.1:} Consider a linear ODE $\frac{dy}{dt} = By$ with diagonalizable matrix $B$. Let an RK method be given with stability fucntion $R$. The origin is stable for this RK method to $\frac{dy}{dt} = By$ (at stepsize h) iff
+\[
+|R( h\lambda)| < 1    
+\]
+forall eigenvalues $\lambda \in \sigma(B)$. (The origin is unstable if $|R( h\lambda)| > 1 $ for any eigenvalue $\lambda$).\\
+
+\textbf{Stability Region:} The \textbf{stability region} of a numerical method is the set of all points such that $\hat R(\mu) = |R(\mu)| < 1$.\\
+
+RK4 has the stability function
+\[
+R(\mu) = 1 + \mu + \frac{1}{2}\mu^2 + \frac{1}{6}\mu^3 + \frac{1}{24}\mu^4.
+\]
+
+The boundary of the stability region is the set of all values such that $R(\mu) = e^{i\theta}$, that is $R(\mu)$ lies on the unit circle.\\
+
+\textbf{A-Stability:} A numerical method is \textbf{A-stable} if its stability region contains the entire left half-plane. In this case, the method will be stable independent of $h$.
+
+\section{Linear Multistep Methods}:
+
+\textbf{Def 5.0.1 (k-step LMM)}: A \textbf{k-step linear multistep method} (LMM) is a numerical method of form
+\[
+    \sum_{j=0}^k \alpha_j y_{n + j} = h\sum_{j=0}^k \beta_j f(y_{n + j})
+\]
+where $\alpha_k \neq 0$ and either $\alpha_0 \neq 0 $ or $\beta_0 \neq 0$. Usually normalize coefficients so that $\alpha_k - 1$ or $\sum_j \beta_j = 1$. If $\beta_k \neq 0$ then the method is \textbf{implicit}, otherwise it is \textbf{explicit}. 
+
+\textbf{Adams-Bashford Methods:} Explicit methods derived by finding interpolating polynomial $\Pi_k^f(t)$ passing through $y^\prime_n,...,y\prime_{n+k-1}$ and integrate it to next timestep so 
+\[
+y_{n+k} = y_{n+k-1} + \int_{t_{n+k-1}}^{t_{n+k}} \Pi_k^f(t)\,dt.
+\]
+Note the $1$-step Adams-Bashford method is the Euler rule.\\
+
+\textbf{Adams-Moulton Methods:} Implicit methods derived by finding interpolating polynomial $\hat \Pi_k^f(t)$ passing through $y\prime_n,...,y\prime_{n+k}$ (where $y_{n+k}$ is not yet known) and integrate it to next timestep so 
+\[
+y_{n+k} = y_{n+k-1} + \int_{t_{n+k-1}}^{t_{n+k}} \Pi_k^f(t)\,dt.
+\]
+Note the $1$-step Adams-Moulton method is the Trapezoidal rule.
+
+\textbf{Algebra of Operators:} Operators are generalisations of functions, that take functions as inputs. Let $g(t): \R \to \R$. Here are some Operators:
+
+\begin{tabular}{l | l}
+     \textbf{Operator}   & \textbf{Definition} \\
+     \hline
+     Identity            & $1 g(t) = g(t)$ \\
+     Shift               & $E_sg(t) = g(t + s)$ \\
+     Forward Difference  & $\Delta_hg(t) = g(t + h) - g(t) = (E_h - 1)g(t)$ \\
+     Backward Differenec & $\nabla_hg(t) = g(t) - g(t - h) = (1 - E_h^{-1})g(t)$ \\
+     Differential        & $Dg(t) = g^\prime(t)$
+\end{tabular}
+
+\textbf{Differential Operator Identities}:
+\begin{align*}
+    E_h &= e^{hD}\quad \small(\text{\textit{TS expansion similar to exp power series}})\normalsize\\
+    D   &= \frac{1}{h}\ln\left[1 + \Delta_h\right]\\
+    D   &= \frac{1}{h}\left[\nabla_h + \frac{1}{2}\nabla_h^2 + \frac{1}{2}\nabla_h^3 + ... \right]\\
+\end{align*}
+
+\textbf{BDF Methods:} Use the trancated backwards difference operator expansion of the differential operator $D$ to approximate f(t,y(t)). Below we derive the first BDF method (\textit{same as backwards Euler}).
+\begin{align*}
+    \frac{1}{h}\left[\nabla_h + \frac{1}{2}\nabla_h^2 + \frac{1}{2}\nabla_h^3 + ... \right]y(t) &= Dy(t) = f(t,y(t))\\
+    \frac{1}{h}\nabla_h y(t) &\approx f(t,y(t))\\
+    y(t) - y(t - h) &\approx hf(t,y(t))\\
+    y_n - y_{t-1} &= hf(t, y(t)).
+\end{align*}
+
+\textbf{Characteristic Polynomials:} Associated with an \textbf{LMM} are the polynomials
+\[
+\rho(\zeta) = \sum_{j=0}^k \alpha_j \zeta^j, \quad \sigma(\zeta) = \sum_{j=0}^k \beta_j\zeta^j    
+\]
+called the \textbf{first characteristic polynomial} and \textbf{second characteristic polynomial} respectively.
+
+\textbf{Residual:} The \textbf{residual} of a linear multistep method at time $t_{n+k}$ is 
+\[
+r_n = \sum_{j=0}^k \alpha_jy(t_{n+j}) - h\sum_{j=0}^k\beta_jy^\prime(t_{n+j}).
+\] 
+\small(this is actually the residual accumulated in the $n + k - 1$ step)\normalsize. An LMM has \textbf{order of consistency} $p$ if 
+\[
+r_n = O(h^{p+1}).    
+\]
+for all sufficiently smooth $f$.\\
+
+\textbf{Consistency Conditions:} The following conditions are equivelant for an LMM having \textbf{order of consistency} $p \geq 1$.
+\begin{align*}
+    \bul& \; \rho(e^z) - z\sigma(e^z) = O(z^{p + 1});\\
+    \bul& \; \frac{\rho(z)}{\log z} - \sigma(z) = O((z - 1)^p).
+\end{align*}
+
+\textbf{Def 5.4.1 (The Root Condition):} An LMM is said to satisfy the \textbf{root condition} if all roots $\zeta$ of 
+\[
+\rho(\zeta)    
+\]
+lie in the unit disk $(|\zeta| \leq 1)$, and any root on the unit circle $(|\zeta| = 1)$ has multiplicity $1$.\\
+
+\textbf{Thm 5.4.1 (Convergence Thm):} For a well-behaved ODE ($f$ has coninuous, bounded partial derivatives), suppose an LMM is equipped with a procedure satisfying $\lim_{h \to 0} y_j = y(t_0 + jh)$ for $j = 1,...,k - 1$. Then the method is guaranteed
+to converge to the exact solution on a fixed interval as $h \to 0$ iff it has order of consistency $p \geq 1$ and satisfies the \textbf{root condition}.\\
+
+\textbf{Thm 5.4.2 (Maximum Order):} the maximum order of a $k$-step method satisfying the root condition is $p = k$ for explicit methods and, for implicit methods, $p = k + 1$ for odd $k$ and $p = k + 2$ for even $k$.
+
+\textbf{Stability Regions:} The \textbf{stability region} $\mathcal S$ of an LMM is the set of all points $z \in \C$ such that all roots $\zeta$ of the polynomial
+\[
+\rho(\zeta) - z\sigma(\zeta) = 0    
+\]
+satisfy $|\zeta| < 1$.
+
+\textbf{Boundary of Stability Region:}
+\[
+\del \mathcal S = \left\{z = \frac{\rho(e^{i\theta})}{\sigma(e^{i\theta})} : \theta \in [0,2\pi]\right\}    
+\]
+
+\textbf{A-Stability:} A method is \textbf{A-stable} (\textbf{unconditionally stable}) if the left half plane $\subset \C$ is contained in $\mathcal S$. In this case the method is stable for any choice of stepsize $h$.\\
+
+\textbf{Thm 5.5.1 (Max Order of A-Stable Methods):} An A-Stable LMM has order $p \leq 2$.\\
+
+\textbf{A$(\mathbf \alpha)$-Stability:} A method is \textbf{A$(\alpha)$-stable} if the wedge $\{z \in \C : |\text{Arg}(z) - \pi| < \alpha \} \subset \mathcal S$. In this case for any $\lambda$ in the $\alpha$-wedge of stability, the method is unconditionally stable.
+
 
 \end{multicols*}
 
