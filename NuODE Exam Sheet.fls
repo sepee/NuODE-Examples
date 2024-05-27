@@ -1,7 +1,7 @@
 PWD c:\Users\Otis\OneDrive - University of Edinburgh\Documents\GitHub\NuODE-Examples\NuODE-Examples
 INPUT C:\Users\Otis\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Otis\OneDrive - University of Edinburgh\Documents\GitHub\NuODE-Examples\NuODE-Examples\main.tex
-OUTPUT main.log
+INPUT c:\Users\Otis\OneDrive - University of Edinburgh\Documents\GitHub\NuODE-Examples\NuODE-Examples\NuODE Exam Sheet.tex
+OUTPUT NuODE Exam Sheet.log
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
@@ -72,10 +72,10 @@ INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\titlesec\titlesec.st
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\titlesec\titlesec.sty
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
-INPUT .\main.aux
-INPUT .\main.aux
-INPUT main.aux
-OUTPUT main.aux
+INPUT .\NuODE Exam Sheet.aux
+INPUT .\NuODE Exam Sheet.aux
+INPUT NuODE Exam Sheet.aux
+OUTPUT NuODE Exam Sheet.aux
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
@@ -117,7 +117,7 @@ INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbsy10.tf
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy7.tfm
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmbsy5.tfm
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
-OUTPUT main.pdf
+OUTPUT NuODE Exam Sheet.pdf
 INPUT C:\Users\Otis\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr9.tfm
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
@@ -142,7 +142,7 @@ INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmex
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti9.tfm
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti7.tfm
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti7.tfm
-INPUT main.aux
+INPUT NuODE Exam Sheet.aux
 INPUT C:\Users\Otis\AppData\Local\MiKTeX\fonts\pk\ljfour\public\esint\dpi600\esint10.pk
 INPUT C:\Users\Otis\AppData\Local\MiKTeX\fonts\pk\ljfour\public\esint\dpi600\esint10.pk
 INPUT C:\Users\Otis\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb

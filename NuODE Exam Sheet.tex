@@ -119,6 +119,8 @@ We can take $L = \sup_D\left[\frac{\del f}{\del y}\right]$.\\
 
 \section{Euler's Method and Taylor Series Methods}
 \textbf{Euler's Method:} for finding approximate solutions to $\frac{dy}{dt} = f(t,y)$ in time interval $t \in [a,b]$. \\ Let $t_m = a + mh$, $h \in \R$ small. Start with $y_0 = y(t_0) = y(a)$ and use iteration function $\boxed{y_{n + 1} = y_n + hf(t_n, y_n)}$. $y_i \approx y(t_i)$.\\
+\textbf{Backward (implicit) Euler's Method:} use iteration function $\boxed{y_{n + 1} = y_n + hf(t_{n+1}, y_{n+1})}$.\\
+
 \textbf{Error:} $\boxed{e_n = |y_n - y(t_n)|}$.\\
 \textbf{Lemma 2.6.1:} Suppose a given sequence of non-negative numbers $(v_n)$ satisfies $v_{n + 1} \leq Av_n + B$, $A > 1, B > 0$. Then for $n = 0,1,2,...$, $\boxed{v_n \leq A^nv_0 + \frac{A^n - 1}{A - 1}B}$.\\
 \textbf{Bound on error:} $\boxed{|e_n| \leq e^{(b-a)L}\frac{M}{2L}h = Dh}$ where $h$ is the timestep, $M$ bounds $|y^{\prime\prime}(t)|$, and $L$ bounds $\frac{\del y}{\del t}$.\\
@@ -291,7 +293,7 @@ J = f^\prime(y)
 lie strictly in the left half plane of $\C$, then $y^*$ is \textbf{asymptotically stable}. If J has any eigenvalues in the right half plane of $\C$, then $y^*$ is \textbf{unstable}.\\
 
 \textbf{Def 4.4.1 (Stability and Asymptotic Stability of Maps):}\\
-Consider a general map $\Psi : \R \to R$ and fixed point $y^*$ of $\Psi$ such that $\Psi(y^*) = y^*$. Define $y^n(y_0)$ to be $n$ applications of $\Psi$ to $y_0$, so $y^2(y_0) = \Psi(\Psi(y_0))$. We say that $y^*$ is:\\
+Consider a general map $\Psi : \R \to \R$ and fixed point $y^*$ of $\Psi$ such that $\Psi(y^*) = y^*$. Define $y^n(y_0)$ to be $n$ applications of $\Psi$ to $y_0$, so $y^2(y_0) = \Psi(\Psi(y_0))$. We say that $y^*$ is:\\
 \textbf{stable} for the given ODE if $\forall \, \varepsilon > 0$ (sufficiently small) $\exists \delta > 0$ such that $\forall \, t > 0$
 \[
     \Vert y_0 - y^*\Vert  < \delta \implies \Vert y^n(y_0) - y^* \Vert < \epsilon;
@@ -445,6 +447,10 @@ r_n = \sum_{j=0}^k \alpha_jy(t_{n+j}) - h\sum_{j=0}^k\beta_jy^\prime(t_{n+j}).
 r_n = O(h^{p+1}).    
 \]
 for all sufficiently smooth $f$.\\
+\textbf{Checking consistency (5.11):} For a multistep method to have \textbf{order of consistency} $p \geq 1$ we must satisfy conditions
+\[
+    \sum_{j = 0}^k {\alpha_j} = 0, \quad \sum_{j=0}^k \alpha_jj^i = i\sum_{j=0}^k \beta_jj^{i-1} \text{ for } i = 1,2,...,p.
+\]
 
 \textbf{Consistency Conditions:} The following conditions are equivelant for an LMM having \textbf{order of consistency} $p \geq 1$.
 \begin{align*}
@@ -452,22 +458,24 @@ for all sufficiently smooth $f$.\\
     \bul& \; \frac{\rho(z)}{\log z} - \sigma(z) = O((z - 1)^p).
 \end{align*}
 
+
 \textbf{Def 5.4.1 (The Root Condition):} An LMM is said to satisfy the \textbf{root condition} if all roots $\zeta$ of 
 \[
 \rho(\zeta)    
-\]
-lie in the unit disk $(|\zeta| \leq 1)$, and any root on the unit circle $(|\zeta| = 1)$ has multiplicity $1$.\\
+\]lie in the unit disk $(|\zeta| \leq 1)$, and any root on the unit circle $(|\zeta| = 1)$ has multiplicity $1$.\\
 
 \textbf{Thm 5.4.1 (Convergence Thm):} For a well-behaved ODE ($f$ has coninuous, bounded partial derivatives), suppose an LMM is equipped with a procedure satisfying $\lim_{h \to 0} y_j = y(t_0 + jh)$ for $j = 1,...,k - 1$. Then the method is guaranteed
 to converge to the exact solution on a fixed interval as $h \to 0$ iff it has order of consistency $p \geq 1$ and satisfies the \textbf{root condition}.\\
 
+Summarise as consistency $+$ root condition $=$ convergence.\\t
+
 \textbf{Thm 5.4.2 (Maximum Order):} the maximum order of a $k$-step method satisfying the root condition is $p = k$ for explicit methods and, for implicit methods, $p = k + 1$ for odd $k$ and $p = k + 2$ for even $k$.
 
-\textbf{Stability Regions:} The \textbf{stability region} $\mathcal S$ of an LMM is the set of all points $z \in \C$ such that all roots $\zeta$ of the polynomial
+\textbf{Stability Regions:} The \textbf{absolute stability region} $\mathcal S$ of an LMM is the set of all points $z \in \C$ such that all roots $\zeta$ of the polynomial
 \[
 \rho(\zeta) - z\sigma(\zeta) = 0    
 \]
-satisfy $|\zeta| < 1$.
+satisfy $|\zeta| < 1$. For \textbf{stability region} (not specifically the absolute stabiity region) we allow that $|\zeta |\leq 1$.
 
 \textbf{Boundary of Stability Region:}
 \[

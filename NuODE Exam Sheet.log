@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10) (preloaded format=pdflatex 2023.12.4)  17 MAY 2024 17:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10) (preloaded format=pdflatex 2023.12.4)  21 MAY 2024 22:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/Otis/OneDrive - University of Edinburgh/Documents/GitHub/NuODE-Examples/NuODE-Examples/main.tex"
-(c:/Users/Otis/OneDrive - University of Edinburgh/Documents/GitHub/NuODE-Examples/NuODE-Examples/main.tex
+**"c:/Users/Otis/OneDrive - University of Edinburgh/Documents/GitHub/NuODE-Examples/NuODE-Examples/NuODE Exam Sheet.tex"
+(c:/Users/Otis/OneDrive - University of Edinburgh/Documents/GitHub/NuODE-Examples/NuODE-Examples/NuODE Exam Sheet.tex
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
 (C:\Users\Otis\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -289,8 +289,8 @@ Package: titlesec 2023/10/27 v2.16 Sectioning titles
 File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count288
 \l__pdf_internal_box=\box101
-) (main.aux)
-\openout1 = `main.aux'.
+) (NuODE Exam Sheet.aux)
+\openout1 = `"NuODE Exam Sheet.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
 LaTeX Font Info:    ... okay on input line 86.
@@ -381,27 +381,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 115--118
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--143
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--154
+Underfull \hbox (badness 10000) in paragraph at lines 124--145
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--158
+Underfull \hbox (badness 10000) in paragraph at lines 154--156
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--162
+Underfull \hbox (badness 10000) in paragraph at lines 158--160
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 163--164
+Underfull \hbox (badness 10000) in paragraph at lines 162--164
 
  []
 
@@ -410,32 +410,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 165--166
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 167--168
+
+ []
+
 [1
 
 {C:/Users/Otis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 211--212
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
 
  []
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 255.
+LaTeX Font Warning: Command \small invalid in math mode on input line 257.
 
 
-LaTeX Font Warning: Command \normalsize invalid in math mode on input line 255.
+LaTeX Font Warning: Command \normalsize invalid in math mode on input line 257.
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 255.
+LaTeX Font Warning: Command \small invalid in math mode on input line 257.
 
 
-LaTeX Font Warning: Command \normalsize invalid in math mode on input line 255.
+LaTeX Font Warning: Command \normalsize invalid in math mode on input line 257.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--257
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--259
+Underfull \hbox (badness 10000) in paragraph at lines 257--259
 
  []
 
@@ -455,123 +455,123 @@ Underfull \hbox (badness 10000) in paragraph at lines 264--265
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 268--269
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 278--280
+Underfull \hbox (badness 10000) in paragraph at lines 280--282
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--286
+Underfull \hbox (badness 10000) in paragraph at lines 286--288
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 290--292
+Underfull \hbox (badness 10000) in paragraph at lines 292--294
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--304
+Underfull \hbox (badness 10000) in paragraph at lines 304--306
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 307--312
+Underfull \hbox (badness 10000) in paragraph at lines 309--314
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 318--321
+Underfull \hbox (badness 10000) in paragraph at lines 320--323
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 357--359
+Underfull \hbox (badness 10000) in paragraph at lines 359--361
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 372--374
+Underfull \hbox (badness 10000) in paragraph at lines 374--376
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 375--376
+Underfull \hbox (badness 10000) in paragraph at lines 377--378
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 382--383
+Underfull \hbox (badness 10000) in paragraph at lines 384--385
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 397--399
+Underfull \hbox (badness 10000) in paragraph at lines 399--401
 
  []
 
 
-Overfull \hbox (18.24284pt too wide) in paragraph at lines 408--417
+Overfull \hbox (18.24284pt too wide) in paragraph at lines 410--419
 [][] 
  []
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 423.
+LaTeX Font Warning: Command \small invalid in math mode on input line 425.
 
 
-LaTeX Font Warning: Command \normalsize invalid in math mode on input line 423.
+LaTeX Font Warning: Command \normalsize invalid in math mode on input line 425.
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 423.
+LaTeX Font Warning: Command \small invalid in math mode on input line 425.
 
 
-LaTeX Font Warning: Command \normalsize invalid in math mode on input line 423.
+LaTeX Font Warning: Command \normalsize invalid in math mode on input line 425.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 446--448
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 458--460
+Underfull \hbox (badness 10000) in paragraph at lines 465--466
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 461--463
+Underfull \hbox (badness 10000) in paragraph at lines 467--469
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 477--478
+Underfull \hbox (badness 10000) in paragraph at lines 485--486
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 479--480
+Underfull \hbox (badness 10000) in paragraph at lines 487--488
 
  []
 
-[4] (main.aux)
+[4] (NuODE Exam Sheet.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 5029 strings out of 475247
- 76122 string characters out of 5758264
+ 5030 strings out of 475247
+ 76316 string characters out of 5758264
  1957785 words of memory out of 5000000
- 26478 multiletter control sequences out of 15000+600000
+ 26479 multiletter control sequences out of 15000+600000
  570109 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,10n,65p,754b,372s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,766b,372s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Otis\AppData\Local\MiKTeX\fonts/pk/ljfour/public/esint/dpi600\esint10.pk><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Users/Otis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (4 pages, 269444 bytes).
+Output written on "NuODE Exam Sheet.pdf" (4 pages, 269994 bytes).
 PDF statistics:
  111 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
